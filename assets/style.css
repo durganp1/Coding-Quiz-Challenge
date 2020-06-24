@@ -1,0 +1,22 @@
+* {
+    box-sizing: border-box;
+}
+.quiz-title {
+    font-size: 30vw;
+    color: navy;
+    text-align: center;
+}
+.quiz-p {
+    font-size: 10vw;
+    color: blue;
+    text-align: center;
+    flex-wrap: wrap;
+}
+.start-button {
+    outline: none;
+    border: none;
+    background-color: blue;
+    color: cornsilk;
+    border-radius: 12px;
+    font-size: 5vw;
+}
