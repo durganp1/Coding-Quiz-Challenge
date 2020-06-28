@@ -7,7 +7,8 @@ var answerOptionOneEl = document.querySelector("#answer-option-one");
 var answerOptionTwoEl = document.querySelector("#answer-option-two");
 var answerOptionThreeEl = document.querySelector("#answer-option-three");
 var answerOptionFourEl = document.querySelector("#answer-option-four");
-
+var currentQuestionIndex = 0;
+var currentScore = 0;
 
 var questionArray = [
     "What is a Method?",
@@ -25,9 +26,9 @@ var questionArray = [
 
 
 
-var answerArray = [{
-    optionOne: "The same as a parameter",
-    optionTwo: true + "A function that belongs to a certain object",
+var answerArray = [
+    {optionOne: true + "A function that belongs to a certain object",
+    optionTwo: "The same as a parameter",
     optionThree: "A type of fungus",
     optionFour: "Color of the Sun"
     },
@@ -36,19 +37,19 @@ var answerArray = [{
     optionThree: "Did Object Move",
     optionFour: "Don't Over Modify"
     },
-    {optionOne: "Finds you local quarry",
-    optionTwo: "Selects a DOM",
-    optionThree: true + "Attaches an object to an email",
+    {optionOne: true + "Attaches an object to an email",
+    optionTwo: "Finds you local quarry",
+    optionThree: "Selects a DOM",
     optionFour: "Colors the sky blue"
     },
-    {optionOne: "<select>",
-    optionTwo: "<hear>",
-    optionThree: "listner",
-    optionFour: true + "addEventListner"
+    {optionOne: true + "addEventListner",
+    optionTwo: "< select >",
+    optionThree: "< hear >",
+    optionFour: "listner"
     },
-    {optionOne: "pushdir",
-    optionTwo: "pulldir",
-    optionThree: true + "mkdir",
+    {optionOne: true + "mkdir",
+    optionTwo: "pushdir",
+    optionThree: "pulldir",
     optionFour: "create.directory"
     },
     {optionOne: true + "array.length",
@@ -56,34 +57,26 @@ var answerArray = [{
     optionThree: "size.array",
     optionFour: "length.array"
     },
-    {optionOne: "gives you a random number from 1 - 100",
-    optionTwo: "gives you a random number that is negative",
-    optionThree:  true + "gives you a random number between 0 - 1, but not 1",
+    {optionOne:  true + "gives you a random number between 0 - 1, but not 1",
+    optionTwo: "gives you a random number from 1 - 100",
+    optionThree: "gives you a random number that is negative",
     optionFour: "gives you a winning lottery ticket"
     },
-    {optionOne: "That you are very angry at your code",
-    optionTwo: "Your code is swearing at you",
-    optionThree: true + "It is known as the NOT operator",
+    {optionOne: true + "It is known as the NOT operator",
+    optionTwo: "That you are very angry at your code",
+    optionThree: "Your code is swearing at you",
     optionFour: "You have given up on coding!"
     },
-    {optionOne: "Happy Code",
-    optionTwo: "Advanced Code",
-    optionThree: true + "Code Block",
+    {optionOne: true + "Code Block",
+    optionTwo: "Happy Code",
+    optionThree: "Advanced Code",
     optionFour: "Top Secret"
     },
-    {optionOne: "A variable",
-    optionTwo: true + "A parameter",
+    {optionOne: true + "A parameter",
+    optionTwo: "A variable",
     optionThree: "An expression",
     optionFour: "An object"
     }]
-
-
-
-
-
-
-
-
 
 var introWrapper = function() {
     var quizTitleEl = document.createElement("div");
@@ -102,41 +95,80 @@ var introWrapper = function() {
         introWrapperEl.appendChild(startButtonEl);
 };
 
+var clearCurrent = function()  {
+    //clear everything first
+        questionWrapperEl.innerHTML = '';
+        answerOptionOneEl.innerHTML = '';
+        answerOptionTwoEl.innerHTML = '';
+        answerOptionThreeEl.innerHTML = '';
+        answerOptionFourEl.innerHTML = '';
+};
+
 var questionRotateEl = function() {
     var questionEl = document.createElement("div");
         questionEl.className = "question-rotation-wrapper";
-        questionEl.innerHTML = "<h2 class = 'question-style'>" + questionArray[0] + "</h2>"
+        questionEl.innerHTML = "<h2 class = 'question-style'>" + questionArray[currentQuestionIndex] + "</h2>"
         questionWrapperEl.appendChild(questionEl);
 };
-var answerRotateEl = function() {
+
+var answerRotateEl = function(event) {
+    var retrieveOptionsArray = [answerArray[currentQuestionIndex].optionOne, answerArray[currentQuestionIndex].optionTwo, answerArray[currentQuestionIndex].optionThree, answerArray[currentQuestionIndex].optionFour]
+    // randomize rertriveOptionsArry
+    function shuffle(retrieveOptionsArray) {
+        var counter = retrieveOptionsArray.length, temp, index;
+            while (counter > 0) {
+                index = Math.floor(Math.random() * counter);
+                counter--;
+                temp = retrieveOptionsArray[counter];
+                retrieveOptionsArray[counter] = retrieveOptionsArray[index];
+                retrieveOptionsArray[index] = temp;
+            }
+            return retrieveOptionsArray;
+    }
+    var shuffledOptions = shuffle(retrieveOptionsArray)
     var answerOneEl = document.createElement("li");
         answerOneEl.className = "answer-style";
-        answerOneEl.innerHTML = "<h5 class = 'answer-style'>" + answerArray[0].optionOne + "</h5>"
+        answerOneEl.innerHTML = "<h5 class = 'answer-style'>" +  shuffledOptions[0] + "</h5>"
         answerOptionOneEl.appendChild(answerOneEl);
     var answerTwoEl = document.createElement("li");
         answerTwoEl.className = "answer-style";
-        answerTwoEl.innerHTML = "<h5 class = 'answer-style'>" + answerArray[0].optionTwo + "</h5>"
+        answerTwoEl.innerHTML = "<h5 class = 'answer-style'>" + shuffledOptions[1] + "</h5>"
         answerOptionTwoEl.appendChild(answerTwoEl);
     var answerThreeEl = document.createElement("li");
         answerThreeEl.className = "answer-style";
-        answerThreeEl.innerHTML = "<h5 class = 'answer-style'>" + answerArray[0].optionThree + "</h5>"
+        answerThreeEl.innerHTML = "<h5 class = 'answer-style'>" + shuffledOptions[2] + "</h5>"
         answerOptionThreeEl.appendChild(answerThreeEl);
     var answerFourEl = document.createElement("li");
         answerFourEl.className = "answer-style";
-        answerFourEl.innerHTML = "<h5 class = 'answer-style'>" + answerArray[0].optionFour + "</h5>"
+        answerFourEl.innerHTML = "<h5 class = 'answer-style'>" + shuffledOptions[3] + "</h5>"
         answerOptionFourEl.appendChild(answerFourEl);
 };
 
+var questionAnswerHandlerEl = function(event) {
+        if ( currentQuestionIndex < questionArray.length ) {
+            clearCurrent();
+            questionRotateEl();
+            answerRotateEl();
+            currentQuestionIndex++;
+        }
+};
 
-
-
-
-
-
-
-
+//answerRotateEl.addEventListener("click", answerChoiceHandler);
 introWrapperEl.addEventListener("click", questionAnswerHandlerEl);
 
-//answerHandlerEl();
-//questionRotateEl();
+document.querySelectorAll('.answer-rotation-wrapper').forEach(item => {
+    item.addEventListener('click', event => {
+
+        //Check the value of the li text
+        var selectedAnswer = item.firstElementChild.firstElementChild.textContent;
+
+        // compare it to optionOne
+
+        //increase if correct
+
+        questionAnswerHandlerEl();
+    })
+  })
+
+
 introWrapper();
