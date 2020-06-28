@@ -27,52 +27,52 @@ var questionArray = [
 
 
 var answerArray = [
-    {optionOne: true + "A function that belongs to a certain object",
+    {optionOne: "A function that belongs to a certain object",
     optionTwo: "The same as a parameter",
     optionThree: "A type of fungus",
     optionFour: "Color of the Sun"
     },
-    {optionOne: true + "Document Object Model",
+    {optionOne: "Document Object Model",
     optionTwo: "Do Over Manytimes",
     optionThree: "Did Object Move",
     optionFour: "Don't Over Modify"
     },
-    {optionOne: true + "Attaches an object to an email",
+    {optionOne: "Attaches an object to an email",
     optionTwo: "Finds you local quarry",
     optionThree: "Selects a DOM",
     optionFour: "Colors the sky blue"
     },
-    {optionOne: true + "addEventListner",
+    {optionOne: "addEventListner",
     optionTwo: "< select >",
     optionThree: "< hear >",
     optionFour: "listner"
     },
-    {optionOne: true + "mkdir",
+    {optionOne: "mkdir",
     optionTwo: "pushdir",
     optionThree: "pulldir",
     optionFour: "create.directory"
     },
-    {optionOne: true + "array.length",
+    {optionOne: "array.length",
     optionTwo: "array.size",
     optionThree: "size.array",
     optionFour: "length.array"
     },
-    {optionOne:  true + "gives you a random number between 0 - 1, but not 1",
+    {optionOne: "gives you a random number between 0 - 1, but not 1",
     optionTwo: "gives you a random number from 1 - 100",
     optionThree: "gives you a random number that is negative",
     optionFour: "gives you a winning lottery ticket"
     },
-    {optionOne: true + "It is known as the NOT operator",
+    {optionOne: "It is known as the NOT operator",
     optionTwo: "That you are very angry at your code",
     optionThree: "Your code is swearing at you",
     optionFour: "You have given up on coding!"
     },
-    {optionOne: true + "Code Block",
+    {optionOne: "Code Block",
     optionTwo: "Happy Code",
     optionThree: "Advanced Code",
     optionFour: "Top Secret"
     },
-    {optionOne: true + "A parameter",
+    {optionOne: "A parameter",
     optionTwo: "A variable",
     optionThree: "An expression",
     optionFour: "An object"
@@ -95,14 +95,7 @@ var introWrapper = function() {
         introWrapperEl.appendChild(startButtonEl);
 };
 
-var clearCurrent = function()  {
-    //clear everything first
-        questionWrapperEl.innerHTML = '';
-        answerOptionOneEl.innerHTML = '';
-        answerOptionTwoEl.innerHTML = '';
-        answerOptionThreeEl.innerHTML = '';
-        answerOptionFourEl.innerHTML = '';
-};
+
 
 var questionRotateEl = function() {
     var questionEl = document.createElement("div");
@@ -114,7 +107,7 @@ var questionRotateEl = function() {
 var answerRotateEl = function(event) {
     var retrieveOptionsArray = [answerArray[currentQuestionIndex].optionOne, answerArray[currentQuestionIndex].optionTwo, answerArray[currentQuestionIndex].optionThree, answerArray[currentQuestionIndex].optionFour]
     // randomize rertriveOptionsArry
-    function shuffle(retrieveOptionsArray) {
+    var shuffle = function(retrieveOptionsArray) {
         var counter = retrieveOptionsArray.length, temp, index;
             while (counter > 0) {
                 index = Math.floor(Math.random() * counter);
@@ -142,33 +135,57 @@ var answerRotateEl = function(event) {
         answerFourEl.className = "answer-style";
         answerFourEl.innerHTML = "<h5 class = 'answer-style'>" + shuffledOptions[3] + "</h5>"
         answerOptionFourEl.appendChild(answerFourEl);
+        console.log(shuffledOptions);
 };
 
-var questionAnswerHandlerEl = function(event) {
-        if ( currentQuestionIndex < questionArray.length ) {
-            clearCurrent();
-            questionRotateEl();
-            answerRotateEl();
-            currentQuestionIndex++;
-        }
+var clearCurrent = function()  {
+    //clear everything first
+        questionWrapperEl.innerHTML = '';
+        answerOptionOneEl.innerHTML = '';
+        answerOptionTwoEl.innerHTML = '';
+        answerOptionThreeEl.innerHTML = '';
+        answerOptionFourEl.innerHTML = '';
 };
 
-//answerRotateEl.addEventListener("click", answerChoiceHandler);
-introWrapperEl.addEventListener("click", questionAnswerHandlerEl);
-
+var rightWrongEl = function() {
 document.querySelectorAll('.answer-rotation-wrapper').forEach(item => {
     item.addEventListener('click', event => {
-
-        //Check the value of the li text
-        var selectedAnswer = item.firstElementChild.firstElementChild.textContent;
-
+    //Check the value of the li text
+    var selectedAnswer = item.firstElementChild.firstElementChild.textContent;
+console.log(selectedAnswer);
+console.log(answerArray[currentQuestionIndex].optionOne);
         // compare it to optionOne
-
+        if (selectedAnswer === answerArray[currentQuestionIndex].optionOne) {
+            alert("correct");
+        }
+        else {
+            alert("wrong");
+        }
         //increase if correct
-
+        currentQuestionIndex++;
+        clearCurrent();
         questionAnswerHandlerEl();
     })
   })
+};
+
+
+var questionAnswerHandlerEl = function(event) {
+        if ( currentQuestionIndex < questionArray.length ) {
+            
+            questionRotateEl();
+            answerRotateEl();
+            
+            
+        }
+        else {
+            endRound();
+        }
+        rightWrongEl();
+};
+
+introWrapperEl.addEventListener("click", questionAnswerHandlerEl);
+
 
 
 introWrapper();
