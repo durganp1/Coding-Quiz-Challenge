@@ -31,3 +31,12 @@
     border-radius: 15px;
     background-color: purple;
 }
+.answer-box {
+    border: purple solid .1rem;
+}
+.answer-box-text {
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: italic;
+    color: purple;
+}

@@ -7,6 +7,8 @@ var answerOptionOneEl = document.querySelector("#answer-option-one");
 var answerOptionTwoEl = document.querySelector("#answer-option-two");
 var answerOptionThreeEl = document.querySelector("#answer-option-three");
 var answerOptionFourEl = document.querySelector("#answer-option-four");
+var answerBoxEl = document.querySelector("#answer-box");
+var answerTextEl = "";
 var currentQuestionIndex = 0;
 var currentScore = 0;
 
@@ -147,20 +149,29 @@ var clearCurrent = function()  {
         answerOptionFourEl.innerHTML = '';
 };
 
+
+
 var rightWrongEl = function() {
 document.querySelectorAll('.answer-rotation-wrapper').forEach(item => {
     item.addEventListener('click', event => {
     //Check the value of the li text
     var selectedAnswer = item.firstElementChild.firstElementChild.textContent;
-console.log(selectedAnswer);
+    
+    
+    console.log(selectedAnswer);
 console.log(answerArray[currentQuestionIndex].optionOne);
         // compare it to optionOne
         if (selectedAnswer === answerArray[currentQuestionIndex].optionOne) {
-            alert("correct");
+            answerTextEl = "Corret!";
         }
         else {
-            alert("wrong");
+            answerTextEl = "Wrong!";
         }
+        var answerBoxTextEl = document.createElement("div");
+        answerBoxTextEl.className = "";
+        answerBoxTextEl.innerHTML = "<p class = 'answer-box-text'>" + answerTextEl + "</p>"
+        answerBoxEl.appendChild(answerBoxTextEl);
+        console.log(answerBoxTextEl);
         //increase if correct
         currentQuestionIndex++;
         clearCurrent();
