@@ -1,16 +1,11 @@
 * {
     box-sizing: border-box;
-}
-.quiz-title {
-    font-size: 30vw;
-    color: navy;
     text-align: center;
+    
 }
-.quiz-p {
-    font-size: 10vw;
-    color: blue;
-    text-align: center;
-    flex-wrap: wrap;
+.intro-instructions {
+    font-size: 1rem;
+    color: purple;
 }
 .start-button {
     outline: none;
@@ -19,4 +14,20 @@
     color: cornsilk;
     border-radius: 12px;
     font-size: 5vw;
+}
+.question-rotation-wrapper {
+    font-size: 3rem;
+    color: purple;
+    
+}
+.answer-style {
+    display: inline-block;
+    padding: 7px 15px;
+    font-size: 1.5rem;
+    color: white;
+    width: 70%;
+    margin-bottom: 15px;
+    margin-top: 5px;
+    border-radius: 15px;
+    background-color: purple;
 }
