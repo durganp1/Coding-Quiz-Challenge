@@ -3,6 +3,24 @@
     text-align: center;
     
 }
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.high-score-container {
+    display: inline-block;
+    font-size: 2rem;
+    color: black;
+    font-weight: bold;
+}
+
+.countdown-timer {
+    font-size: 1.5rem;
+    color: black;
+    font-weight: bold;
+    display: inline-block;
+}
 .intro-instructions {
     font-size: 1rem;
     color: purple;

@@ -8,6 +8,8 @@ var answerOptionTwoEl = document.querySelector("#answer-option-two");
 var answerOptionThreeEl = document.querySelector("#answer-option-three");
 var answerOptionFourEl = document.querySelector("#answer-option-four");
 var answerBoxEl = document.querySelector("#answer-box");
+var timerEl = document.getElementById("countdown");
+var highScoreEl = document.getElementById("high-score-container");
 var answerTextEl = "";
 var currentQuestionIndex = 0;
 var currentScore = 0;
@@ -23,10 +25,7 @@ var questionArray = [
     "What does '!' stand for?",
     "What do you call the code between the '{}' ?",
     "What is x called in the following 'function(x)' ?"
-]
-
-
-
+];
 
 var answerArray = [
     {optionOne: "A function that belongs to a certain object",
@@ -78,7 +77,7 @@ var answerArray = [
     optionTwo: "A variable",
     optionThree: "An expression",
     optionFour: "An object"
-    }]
+    }];
 
 var introWrapper = function() {
     var quizTitleEl = document.createElement("div");
@@ -94,20 +93,30 @@ var introWrapper = function() {
     var startButtonEl = document.createElement("button");
         startButtonEl.textContent = "Click to Start";
         startButtonEl.className = "start-button";
-        introWrapperEl.appendChild(startButtonEl);
+        introWrapperEl.appendChild(startButtonEl);        
 };
 
+var finalHighScoreEl = function() {
+    highScoreEl.textContent = "High Score is ";
+};
 
+var countdownEl = function() {
+    currentScore = 90;
+    var timeInterval = setInterval(function() {
+          timerEl.textContent = "score " + currentScore;
+          currentScore--;
+      }, 1000);
+};
 
 var questionRotateEl = function() {
     var questionEl = document.createElement("div");
         questionEl.className = "question-rotation-wrapper";
-        questionEl.innerHTML = "<h2 class = 'question-style'>" + questionArray[currentQuestionIndex] + "</h2>"
+        questionEl.innerHTML = "<h2 class = 'question-style'>" + questionArray[currentQuestionIndex] + "</h2>";
         questionWrapperEl.appendChild(questionEl);
 };
 
 var answerRotateEl = function(event) {
-    var retrieveOptionsArray = [answerArray[currentQuestionIndex].optionOne, answerArray[currentQuestionIndex].optionTwo, answerArray[currentQuestionIndex].optionThree, answerArray[currentQuestionIndex].optionFour]
+    var retrieveOptionsArray = [answerArray[currentQuestionIndex].optionOne, answerArray[currentQuestionIndex].optionTwo, answerArray[currentQuestionIndex].optionThree, answerArray[currentQuestionIndex].optionFour];
     // randomize rertriveOptionsArry
     var shuffle = function(retrieveOptionsArray) {
         var counter = retrieveOptionsArray.length, temp, index;
@@ -117,10 +126,10 @@ var answerRotateEl = function(event) {
                 temp = retrieveOptionsArray[counter];
                 retrieveOptionsArray[counter] = retrieveOptionsArray[index];
                 retrieveOptionsArray[index] = temp;
-            }
+            };
             return retrieveOptionsArray;
-    }
-    var shuffledOptions = shuffle(retrieveOptionsArray)
+    };
+    var shuffledOptions = shuffle(retrieveOptionsArray);
     var answerOneEl = document.createElement("li");
         answerOneEl.className = "answer-style";
         answerOneEl.innerHTML = "<h5 class = 'answer-style'>" +  shuffledOptions[0] + "</h5>"
@@ -149,54 +158,91 @@ var clearCurrent = function()  {
         answerOptionFourEl.innerHTML = '';
 };
 
-
-
 var rightWrongEl = function() {
 document.querySelectorAll('.answer-rotation-wrapper').forEach(item => {
     item.addEventListener('click', event => {
+       
     //Check the value of the li text
     var selectedAnswer = item.firstElementChild.firstElementChild.textContent;
-    
-    
-    console.log(selectedAnswer);
-console.log(answerArray[currentQuestionIndex].optionOne);
         // compare it to optionOne
+        console.log(selectedAnswer);
+        console.log(answerArray[currentQuestionIndex].optionOne);
+
+
         if (selectedAnswer === answerArray[currentQuestionIndex].optionOne) {
-            answerTextEl = "Corret!";
+            answerTextEl = "Correct!";
         }
         else {
             answerTextEl = "Wrong!";
-        }
-        var answerBoxTextEl = document.createElement("div");
-        answerBoxTextEl.className = "";
-        answerBoxTextEl.innerHTML = "<p class = 'answer-box-text'>" + answerTextEl + "</p>"
-        answerBoxEl.appendChild(answerBoxTextEl);
-        console.log(answerBoxTextEl);
-        //increase if correct
+            currentScore -= 10;
+        };
+        
         currentQuestionIndex++;
+        console.log(currentQuestionIndex);
+        debugger;
         clearCurrent();
         questionAnswerHandlerEl();
     })
-  })
-};
+    })
+    };
+  
 
 
 var questionAnswerHandlerEl = function(event) {
-        if ( currentQuestionIndex < questionArray.length ) {
-            
+
+        if ( currentQuestionIndex < questionArray.length ) { 
             questionRotateEl();
-            answerRotateEl();
-            
-            
+            answerRotateEl();  
         }
         else {
-            endRound();
-        }
+            gameOverEl();
+        };
         rightWrongEl();
 };
 
-introWrapperEl.addEventListener("click", questionAnswerHandlerEl);
-
-
+introWrapperEl.addEventListener("click", () => {
+    questionAnswerHandlerEl();
+    countdownEl();
+});
 
 introWrapper();
+finalHighScoreEl();
+
+var gameOverEl = function() {
+    var gameOverWrapperEl = document.createElement("div");
+        gameOverWrapperEl.className = "intro-wrapper";
+    var gameOverHeaderEl = document.createElement("h2");
+        gameOverHeaderEl.className = "question-rotation-wrapper";
+        gameOverHeaderEl.textContent = "All Done!";
+    var gameOverScoreEl = document.createElement("p");
+        gameOverScoreEl.className = "intro-instructions";
+        gameOverScoreEl.textContent = "Your Final Score is " + currentScore;
+        gameOverHeaderEl.appendChild(gameOverScoreEl);
+        gameOverWrapperEl.appendChild(gameOverHeaderEl);
+    var enterInitialsWrapperEl = document.createElement("div");
+        enterInitialsWrapperEl.className = "intro-wrapper";
+    var enterInitialsTextEl = document.createElement("p");
+        enterInitialsTextEl.className = "intro-instructions";
+        enterInitialsTextEl.textContent = "Please Enter Your Initials ";
+        enterInitialsWrapperEl.appendChild(enterInitialsTextEl)
+    var inputInitialsEl = document.getElementById("input-box");
+        inputInitialsEl.textContent = "Initials";
+        inputInitialsEl.className = "input-box";
+        enterInitialsWrapperEl.appendChild(inputInitialsEl);     
+};
+
+// var saveTasks = function() {
+//     localStorage.setItem("tasks", JSON.stringify(tasks));
+// }
+// var loadTasks = function() {
+// var savedTasks = localStorage.getItem("tasks");
+//     if (!savedTasks) {
+//         return false;
+//     }
+//     savedTasks = JSON.parse(savedTasks);
+//     console.log("Saved Tasks from loading")
+//     console.log(savedTasks);
+//     for (var i = 0; i < savedTasks.length; i++) {
+//         createTaskEl(savedTasks[i]);
+//     }
+// };
