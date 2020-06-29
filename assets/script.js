@@ -1,6 +1,8 @@
 
 var pageContentEl = document.querySelector("#main-body");
 var questionIntroEl = document.querySelector("#question-intro-section");
+var gameOverWrapperEl = document.querySelector("#answer-box");
+var enterInitialsWrapperEl = document.querySelector("#main-body")
 var introWrapperEl = document.querySelector("#intro-wrapper");
 var questionWrapperEl = document.querySelector("#question-rotation-wrapper");
 var answerOptionOneEl = document.querySelector("#answer-option-one");
@@ -103,6 +105,12 @@ var finalHighScoreEl = function() {
 
 var countdownEl = function() {
     currentScore = 90;
+    if (currentQuestionIndex <= questionArray.length) {
+        timeInterval;
+    }
+    else {
+        clearInterval(timeInterval);
+    }
     var timeInterval = setInterval(function() {
           timerEl.textContent = "score " + currentScore;
           currentScore--;
@@ -157,6 +165,7 @@ var clearCurrent = function()  {
         answerOptionTwoEl.innerHTML = '';
         answerOptionThreeEl.innerHTML = '';
         answerOptionFourEl.innerHTML = '';
+        introWrapperEl.innerHTML = "";
 };
 
 var rightWrongEl = function(event) {
@@ -206,32 +215,38 @@ introWrapperEl.addEventListener("click", () => {
     countdownEl();
 });
 
-introWrapper();
-finalHighScoreEl();
+
 
 var gameOverEl = function() {
-    var gameOverWrapperEl = document.createElement("div");
-        gameOverWrapperEl.className = "intro-wrapper";
+    var gameOverEl = document.createElement("div");
+        gameOverEl.className = "intro-wrapper";
     var gameOverHeaderEl = document.createElement("h2");
-        gameOverHeaderEl.className = "question-rotation-wrapper";
+        gameOverHeaderEl.className = "answer-block-top";
         gameOverHeaderEl.textContent = "All Done!";
     var gameOverScoreEl = document.createElement("p");
         gameOverScoreEl.className = "intro-instructions";
         gameOverScoreEl.textContent = "Your Final Score is " + currentScore;
         gameOverHeaderEl.appendChild(gameOverScoreEl);
         gameOverWrapperEl.appendChild(gameOverHeaderEl);
-    var enterInitialsWrapperEl = document.createElement("div");
-        enterInitialsWrapperEl.className = "intro-wrapper";
+    var enterInitialsEl = document.createElement("div");
+        enterInitialsEl.className = "intro-wrapper";
     var enterInitialsTextEl = document.createElement("p");
         enterInitialsTextEl.className = "intro-instructions";
         enterInitialsTextEl.textContent = "Please Enter Your Initials ";
-        enterInitialsWrapperEl.appendChild(enterInitialsTextEl)
-    var inputInitialsEl = document.getElementById("input-box");
-        inputInitialsEl.textContent = "Initials";
-        inputInitialsEl.className = "input-box";
-        enterInitialsWrapperEl.appendChild(inputInitialsEl);     
+        
+    var inputInitialsEl = document.createElement("INPUT");
+        inputInitialsEl.setAttribute("type", "text");
+        inputInitialsEl.setAttribute("value", "");
+        enterInitialsTextEl.appendChild(inputInitialsEl);
+        enterInitialsWrapperEl.appendChild(enterInitialsTextEl); 
+        console.log(gameOverHeaderEl);
+        console.log(gameOverScoreEl);
+
+        
 };
 
+introWrapper();
+finalHighScoreEl();
 // var saveTasks = function() {
 //     localStorage.setItem("tasks", JSON.stringify(tasks));
 // }
