@@ -3,6 +3,9 @@
     text-align: center;
     
 }
+.input-box {
+    border: none;
+}
 .header-wrapper {
     display: flex;
     align-items: center;

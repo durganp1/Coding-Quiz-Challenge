@@ -15,7 +15,7 @@ var timerEl = document.getElementById("countdown");
 var highScoreEl = document.getElementById("high-score-container");
 var answerTextEl = "";
 var currentQuestionIndex = 0;
-var currentScore = 0;
+var currentScoreEl = 90;
 
 var questionArray = [
     "What is a Method?",
@@ -104,16 +104,18 @@ var finalHighScoreEl = function() {
 };
 
 var countdownEl = function() {
-    currentScore = 90;
     if (currentQuestionIndex <= questionArray.length) {
         timeInterval;
+        console.log(currentQuestionIndex);
+        console.log(questionArray.length);
     }
     else {
+        
         clearInterval(timeInterval);
     }
     var timeInterval = setInterval(function() {
-          timerEl.textContent = "score " + currentScore;
-          currentScore--;
+          timerEl.textContent = "score " + currentScoreEl;
+          currentScoreEl--;
       }, 1000);
 };
 
@@ -155,7 +157,6 @@ var answerRotateEl = function(event) {
         answerFourEl.className = "answer-style";
         answerFourEl.innerHTML = "<h5 class = 'answer-style'>" + shuffledOptions[3] + "</h5>"
         answerOptionFourEl.appendChild(answerFourEl);
-        console.log(shuffledOptions);
 };
 
 var clearCurrent = function()  {
@@ -170,24 +171,19 @@ var clearCurrent = function()  {
 
 var rightWrongEl = function(event) {
     answerBoxTextEl.textContent = "";
-    console.log(event.target);
     var selectedAnswer = event.target.textContent;
-        console.log(selectedAnswer);
-        console.log(answerArray[currentQuestionIndex].optionOne);
-
         if (selectedAnswer === answerArray[currentQuestionIndex].optionOne) {
             answerTextEl = "Correct!";
         }
         else {
             answerTextEl = "Wrong!";
-            currentScore -= 10;
+            currentScoreEl -= 10;
         };
         answerBoxTextEl = document.createElement("h2");
         answerBoxTextEl.className = "question-rotation-wrapper";
         answerBoxTextEl.textContent = answerTextEl;
         answerBoxEl.appendChild(answerBoxTextEl);
         currentQuestionIndex++;
-        console.log(currentQuestionIndex);
         clearCurrent();
         questionAnswerHandlerEl();
 };
@@ -199,13 +195,13 @@ document.querySelectorAll(".answer-rotation-wrapper").forEach(item => {
 
 
 var questionAnswerHandlerEl = function(event) {
-   
-
         if ( currentQuestionIndex < questionArray.length ) { 
+            countdownEl();
             questionRotateEl();
             answerRotateEl();  
         }
         else {
+            countdownEl();
             gameOverEl();
         };
 };
@@ -215,8 +211,6 @@ introWrapperEl.addEventListener("click", () => {
     countdownEl();
 });
 
-
-
 var gameOverEl = function() {
     var gameOverEl = document.createElement("div");
         gameOverEl.className = "intro-wrapper";
@@ -225,7 +219,7 @@ var gameOverEl = function() {
         gameOverHeaderEl.textContent = "All Done!";
     var gameOverScoreEl = document.createElement("p");
         gameOverScoreEl.className = "intro-instructions";
-        gameOverScoreEl.textContent = "Your Final Score is " + currentScore;
+        gameOverScoreEl.textContent = "Your Final Score is " + currentScoreEl;
         gameOverHeaderEl.appendChild(gameOverScoreEl);
         gameOverWrapperEl.appendChild(gameOverHeaderEl);
     var enterInitialsEl = document.createElement("div");
@@ -233,17 +227,47 @@ var gameOverEl = function() {
     var enterInitialsTextEl = document.createElement("p");
         enterInitialsTextEl.className = "intro-instructions";
         enterInitialsTextEl.textContent = "Please Enter Your Initials ";
-        
     var inputInitialsEl = document.createElement("INPUT");
         inputInitialsEl.setAttribute("type", "text");
         inputInitialsEl.setAttribute("value", "");
         enterInitialsTextEl.appendChild(inputInitialsEl);
-        enterInitialsWrapperEl.appendChild(enterInitialsTextEl); 
-        console.log(gameOverHeaderEl);
-        console.log(gameOverScoreEl);
-
-        
+        enterInitialsWrapperEl.appendChild(enterInitialsTextEl);
+    var inputInitialsButtonEl = document.createElement("button");
+        inputInitialsButtonEl.textContent = "Submit";
+        inputInitialsButtonEl.className = "start-button";
+        enterInitialsWrapperEl.appendChild(inputInitialsButtonEl); 
+        inputInitialsButtonEl.addEventListener("click", () => {
+            answerBoxTextEl.textContent = "";
+            enterInitialsTextEl.innerHTML = "";
+            inputInitialsButtonEl.innerHTML = "";
+            endGameHighScoresEl();
+        });        
 };
+
+var endGameHighScoresEl = function() {
+    var endGameEl = document.createElement("div");
+        endGameEl.className = "intro-wrapper";
+    var endGameHeaderEl = document.createElement("h2");
+        endGameHeaderEl.className = "answer-block-top";
+        endGameHeaderEl.textContent = "High Scores";
+        gameOverWrapperEl.appendChild(endGameHeaderEl);
+    var endGameListEl = document.createElement("ol");
+        endGameListEl.className = "intro-wrapper";
+        endGameHeaderEl.appendChild(endGameListEl);
+    var endGameListItemsEl = document.createElement("li");
+        endGameListItemsEl.className = "intro-instructions";
+        endGameListItemsEl.textContent = "test 1";
+        endGameListEl.appendChild(endGameListItemsEl);
+    var endGameListItemsTwoEL = document.createElement("li");
+        endGameListItemsTwoEL.className = "intro-instructions";
+        endGameListItemsTwoEL.textContent = "test 2";
+        endGameListEl.appendChild(endGameListItemsTwoEL);
+    var endGameListItemsThreeEl = document.createElement("li");
+        endGameListItemsThreeEl.className = "intro-instructions";
+        endGameListItemsThreeEl.textContent = "test 3"
+        endGameListEl.appendChild(endGameListItemsThreeEl);
+};
+
 
 introWrapper();
 finalHighScoreEl();
