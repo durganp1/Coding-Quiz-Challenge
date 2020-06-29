@@ -8,6 +8,7 @@ var answerOptionTwoEl = document.querySelector("#answer-option-two");
 var answerOptionThreeEl = document.querySelector("#answer-option-three");
 var answerOptionFourEl = document.querySelector("#answer-option-four");
 var answerBoxEl = document.querySelector("#answer-box");
+var answerBoxTextEl = "";
 var timerEl = document.getElementById("countdown");
 var highScoreEl = document.getElementById("high-score-container");
 var answerTextEl = "";
@@ -158,16 +159,12 @@ var clearCurrent = function()  {
         answerOptionFourEl.innerHTML = '';
 };
 
-var rightWrongEl = function() {
-document.querySelectorAll('.answer-rotation-wrapper').forEach(item => {
-    item.addEventListener('click', event => {
-       
-    //Check the value of the li text
-    var selectedAnswer = item.firstElementChild.firstElementChild.textContent;
-        // compare it to optionOne
+var rightWrongEl = function(event) {
+    answerBoxTextEl.textContent = "";
+    console.log(event.target);
+    var selectedAnswer = event.target.textContent;
         console.log(selectedAnswer);
         console.log(answerArray[currentQuestionIndex].optionOne);
-
 
         if (selectedAnswer === answerArray[currentQuestionIndex].optionOne) {
             answerTextEl = "Correct!";
@@ -176,19 +173,24 @@ document.querySelectorAll('.answer-rotation-wrapper').forEach(item => {
             answerTextEl = "Wrong!";
             currentScore -= 10;
         };
-        
+        answerBoxTextEl = document.createElement("h2");
+        answerBoxTextEl.className = "question-rotation-wrapper";
+        answerBoxTextEl.textContent = answerTextEl;
+        answerBoxEl.appendChild(answerBoxTextEl);
         currentQuestionIndex++;
         console.log(currentQuestionIndex);
-        debugger;
         clearCurrent();
         questionAnswerHandlerEl();
-    })
-    })
-    };
+};
+
+document.querySelectorAll(".answer-rotation-wrapper").forEach(item => {
+    item.addEventListener("click", rightWrongEl)
+});
   
 
 
 var questionAnswerHandlerEl = function(event) {
+   
 
         if ( currentQuestionIndex < questionArray.length ) { 
             questionRotateEl();
@@ -197,7 +199,6 @@ var questionAnswerHandlerEl = function(event) {
         else {
             gameOverEl();
         };
-        rightWrongEl();
 };
 
 introWrapperEl.addEventListener("click", () => {
