@@ -21,7 +21,7 @@ var timeInterval;
 var inputInitialsEl;
 var gameOverScoreEl;
 var scores = [];
-var scoreIdCounter = 0;
+var scoreId = 0;
 
 
 var questionArray = [
@@ -107,13 +107,11 @@ var introWrapper = function() {
              
 };
 
-var finalHighScoreEl = function() {
-    highScoreEl.textContent = "High Score is ";
-};
+
 
 var countdownEl = function () {
         timeInterval = setInterval(function() {
-        timerEl.textContent = "Score " + currentScoreEl;
+        timerEl.textContent = "Scores " + currentScoreEl;
         currentScoreEl--;
     }, 1000);
         
@@ -239,25 +237,33 @@ var gameOverEl = function(scoreDataObj) {
         inputInitialsButtonEl.addEventListener("click", () => {
     var scoreDataObj = {
         name: inputInitialsEl.value,
-        score: currentScoreEl + 1,
-        id: scoreIdCounter
+        score: currentScoreEl + 1
         } 
         answerBoxTextEl.textContent = "";
         enterInitialsTextEl.innerHTML = "";
         inputInitialsButtonEl.innerHTML = "";
         clearInterval(timeInterval);
         scores.push(scoreDataObj);
-        scoreIdCounter++;
+        //scoreIdCounter++;
         saveScores();
         endGameHighScoresEl();
         });     
 };
 
+var finalHighScoreEl = function() { 
+    highScoreEl.textContent = "High Score is ";
+    var highestScore = 0;
 
+    for ( i = 0; i < scores.length; i++) {
+        if (scores[i] > highestScore) {
+            highestScore = scores[i]
+        }
+    }
+    return highestScore;
+};
+console.log(finalHighScoreEl(scores));
 
 var endGameHighScoresEl = function() {
-
-   
     var endGameEl = document.createElement("div");
         endGameEl.className = "intro-wrapper";
     var endGameHeaderEl = document.createElement("h2");
@@ -269,7 +275,7 @@ var endGameHighScoresEl = function() {
         endGameHeaderEl.appendChild(endGameListEl);
     var endGameListItemsEl = document.createElement("li");
         endGameListItemsEl.className = "intro-instructions";
-        endGameListItemsEl.textContent = "test 1";
+        endGameListItemsEl.textContent = "";
         endGameListEl.appendChild(endGameListItemsEl);
     var endGameListItemsTwoEL = document.createElement("li");
         endGameListItemsTwoEL.className = "intro-instructions";
@@ -282,15 +288,21 @@ var endGameHighScoresEl = function() {
 };
 
 var saveScores = function () {
+        console.log(scores);
         localStorage.setItem("scores", JSON.stringify(scores));
+        
 }
 
 var loadScores = function () {
     var savedScores = localStorage.getItem("scores");
-        if (!saveScores) {
+        if (!savedScores) {
             return false;
         }
-        saveScores = JSON.parse(savedScores);
+        savedScores = JSON.parse(savedScores);
+        console.log(savedScores);
+        for ( i = 0; i < savedScores.length; i++) {
+            finalHighScoreEl(savedScores[i]);
+        }
 
 }
 
