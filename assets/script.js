@@ -15,7 +15,9 @@ var timerEl = document.getElementById("countdown");
 var highScoreEl = document.getElementById("high-score-container");
 var answerTextEl = "";
 var currentQuestionIndex = 0;
+var counterEl = 0;
 var currentScoreEl = 90;
+var timeInterval;
 
 var questionArray = [
     "What is a Method?",
@@ -103,20 +105,11 @@ var finalHighScoreEl = function() {
     highScoreEl.textContent = "High Score is ";
 };
 
-var countdownEl = function() {
-    if (currentQuestionIndex <= questionArray.length) {
-        timeInterval;
-        console.log(currentQuestionIndex);
-        console.log(questionArray.length);
-    }
-    else {
-        
-        clearInterval(timeInterval);
-    }
-    var timeInterval = setInterval(function() {
-          timerEl.textContent = "score " + currentScoreEl;
-          currentScoreEl--;
-      }, 1000);
+var countdownEl = function () {
+        timeInterval = setInterval(function() {
+        timerEl.textContent = "Score " + currentScoreEl;
+    }, 1000);
+        currentScoreEl--;
 };
 
 var questionRotateEl = function() {
@@ -196,22 +189,21 @@ document.querySelectorAll(".answer-rotation-wrapper").forEach(item => {
 
 var questionAnswerHandlerEl = function(event) {
         if ( currentQuestionIndex < questionArray.length ) { 
-            countdownEl();
             questionRotateEl();
             answerRotateEl();  
         }
         else {
-            countdownEl();
             gameOverEl();
         };
 };
 
 introWrapperEl.addEventListener("click", () => {
-    questionAnswerHandlerEl();
     countdownEl();
+    questionAnswerHandlerEl();
 });
 
 var gameOverEl = function() {
+        clearTimeout(timeInterval);
     var gameOverEl = document.createElement("div");
         gameOverEl.className = "intro-wrapper";
     var gameOverHeaderEl = document.createElement("h2");
