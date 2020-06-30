@@ -18,6 +18,11 @@ var currentQuestionIndex = 0;
 var counterEl = 0;
 var currentScoreEl = 90;
 var timeInterval;
+var inputInitialsEl;
+var gameOverScoreEl;
+var scores = [];
+var scoreIdCounter = 0;
+
 
 var questionArray = [
     "What is a Method?",
@@ -98,7 +103,8 @@ var introWrapper = function() {
     var startButtonEl = document.createElement("button");
         startButtonEl.textContent = "Click to Start";
         startButtonEl.className = "start-button";
-        introWrapperEl.appendChild(startButtonEl);        
+        introWrapperEl.appendChild(startButtonEl); 
+             
 };
 
 var finalHighScoreEl = function() {
@@ -108,8 +114,9 @@ var finalHighScoreEl = function() {
 var countdownEl = function () {
         timeInterval = setInterval(function() {
         timerEl.textContent = "Score " + currentScoreEl;
-    }, 1000);
         currentScoreEl--;
+    }, 1000);
+        
 };
 
 var questionRotateEl = function() {
@@ -202,8 +209,9 @@ introWrapperEl.addEventListener("click", () => {
     questionAnswerHandlerEl();
 });
 
-var gameOverEl = function() {
+var gameOverEl = function(scoreDataObj) {
         clearTimeout(timeInterval);
+        timerEl.textContent = "";
     var gameOverEl = document.createElement("div");
         gameOverEl.className = "intro-wrapper";
     var gameOverHeaderEl = document.createElement("h2");
@@ -211,7 +219,7 @@ var gameOverEl = function() {
         gameOverHeaderEl.textContent = "All Done!";
     var gameOverScoreEl = document.createElement("p");
         gameOverScoreEl.className = "intro-instructions";
-        gameOverScoreEl.textContent = "Your Final Score is " + currentScoreEl;
+        gameOverScoreEl.textContent = "Your Final Score is " + (currentScoreEl + 1);
         gameOverHeaderEl.appendChild(gameOverScoreEl);
         gameOverWrapperEl.appendChild(gameOverHeaderEl);
     var enterInitialsEl = document.createElement("div");
@@ -219,7 +227,7 @@ var gameOverEl = function() {
     var enterInitialsTextEl = document.createElement("p");
         enterInitialsTextEl.className = "intro-instructions";
         enterInitialsTextEl.textContent = "Please Enter Your Initials ";
-    var inputInitialsEl = document.createElement("INPUT");
+        inputInitialsEl = document.createElement("INPUT");
         inputInitialsEl.setAttribute("type", "text");
         inputInitialsEl.setAttribute("value", "");
         enterInitialsTextEl.appendChild(inputInitialsEl);
@@ -227,16 +235,29 @@ var gameOverEl = function() {
     var inputInitialsButtonEl = document.createElement("button");
         inputInitialsButtonEl.textContent = "Submit";
         inputInitialsButtonEl.className = "start-button";
-        enterInitialsWrapperEl.appendChild(inputInitialsButtonEl); 
+        enterInitialsWrapperEl.appendChild(inputInitialsButtonEl);
         inputInitialsButtonEl.addEventListener("click", () => {
-            answerBoxTextEl.textContent = "";
-            enterInitialsTextEl.innerHTML = "";
-            inputInitialsButtonEl.innerHTML = "";
-            endGameHighScoresEl();
-        });        
+    var scoreDataObj = {
+        name: inputInitialsEl.value,
+        score: currentScoreEl + 1,
+        id: scoreIdCounter
+        } 
+        answerBoxTextEl.textContent = "";
+        enterInitialsTextEl.innerHTML = "";
+        inputInitialsButtonEl.innerHTML = "";
+        clearInterval(timeInterval);
+        scores.push(scoreDataObj);
+        scoreIdCounter++;
+        saveScores();
+        endGameHighScoresEl();
+        });     
 };
 
+
+
 var endGameHighScoresEl = function() {
+
+   
     var endGameEl = document.createElement("div");
         endGameEl.className = "intro-wrapper";
     var endGameHeaderEl = document.createElement("h2");
@@ -260,9 +281,23 @@ var endGameHighScoresEl = function() {
         endGameListEl.appendChild(endGameListItemsThreeEl);
 };
 
+var saveScores = function () {
+        localStorage.setItem("scores", JSON.stringify(scores));
+}
+
+var loadScores = function () {
+    var savedScores = localStorage.getItem("scores");
+        if (!saveScores) {
+            return false;
+        }
+        saveScores = JSON.parse(savedScores);
+
+}
+
 
 introWrapper();
 finalHighScoreEl();
+loadScores();
 // var saveTasks = function() {
 //     localStorage.setItem("tasks", JSON.stringify(tasks));
 // }
