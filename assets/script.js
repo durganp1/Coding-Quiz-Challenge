@@ -1,6 +1,6 @@
 
 var headerWrapperEl = document.querySelector("#header-wrapper");
-var gameOverWrapperEl = document.querySelector("#answer-box");
+var gameOverWrapperEl = document.querySelector("#game-over");
 var introWrapperEl = document.querySelector("#intro-wrapper");
 var questionWrapperEl = document.querySelector("#question-rotation-wrapper");
 var answerOptionOneEl = document.querySelector("#answer-option-one");
@@ -237,17 +237,17 @@ var gameOverEl = function(scoreDataObj) {
         inputInitialsEl.setAttribute("type", "text");
         inputInitialsEl.setAttribute("value", "");
         enterInitialsTextEl.appendChild(inputInitialsEl);
-        answerBoxEl.appendChild(enterInitialsTextEl);
+        gameOverWrapperEl.appendChild(enterInitialsTextEl);
     var inputInitialsButtonEl = document.createElement("button");
         inputInitialsButtonEl.textContent = "Submit";
         inputInitialsButtonEl.className = "start-button";
-        answerBoxEl.appendChild(inputInitialsButtonEl);
+        gameOverWrapperEl.appendChild(inputInitialsButtonEl);
         inputInitialsButtonEl.addEventListener("click", () => {
     var scoreDataObj = {
         name: inputInitialsEl.value,
         score: currentScoreEl + 1
         } 
-        answerBoxTextEl.textContent = "";
+        gameOverWrapperEl.innerHTML = "";
         enterInitialsTextEl.innerHTML = "";
         inputInitialsButtonEl.innerHTML = "";
         clearInterval(timeInterval);
@@ -280,7 +280,7 @@ var finalHighScoreEl = function() {
     var endGameHeaderEl = document.createElement("h2");
         endGameHeaderEl.className = "answer-block-top";
         endGameHeaderEl.textContent = "High Scores";
-        gameOverWrapperEl.appendChild(endGameHeaderEl);
+        answerBoxEl.appendChild(endGameHeaderEl);
 
         scoresObj.sort(function(a, b) {
             return b.score - a.score;
@@ -289,20 +289,21 @@ var finalHighScoreEl = function() {
     var listScore = document.createElement("li");
         listScore.textContent = score.name + "\xa0\xa0\xa0\xa0\xa0" + score.score;
         listScore.className = "intro-instructions";
-        gameOverWrapperEl.appendChild(listScore);
+        answerBoxEl.appendChild(listScore);
         });
     var newGameButtonEl = document.createElement("button");
         newGameButtonEl.textContent = "New Game";
         newGameButtonEl.id = ("new-game-button");
         newGameButtonEl.className = "new-clear-button";
-        gameOverWrapperEl.appendChild(newGameButtonEl);
+        answerBoxEl.appendChild(newGameButtonEl);
         
     var clearAllButton = document.createElement("button");
         clearAllButton.textContent = "Clear All Scores";
         clearAllButton.className = "new-clear-button";
-        gameOverWrapperEl.appendChild(clearAllButton);
+        answerBoxEl.appendChild(clearAllButton);
         
-        //document.getElementById("new-game-button").addEventListener("click", restartGame());   
+        //newGameButtonEl.addEventListener("click", restartGame()); 
+        //clearAllButton.addEventListener("click", localStorage.clear());    
 
 };
 
@@ -315,7 +316,7 @@ var restartGame = function() {
 
 
 
-//document.getElementById("Clear All Scores").addEventListener("click", localStorage.clear());  
+
 
 introWrapper();
 loadScores();
