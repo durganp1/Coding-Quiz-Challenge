@@ -7,27 +7,18 @@
     <link rel = "stylesheet" href="./assets/style.css">
 </head>
 <body>
-    <header>
-        <div class = "high-score-container" id = "high-score-container">
-
-        </div>
-        <h1 class = "coding-quiz-title">Coding Quiz Challenge</h1>
-        <div class = "countdown-timer" id = "countdown-timer">
-
-        </div>
-    </header>
+    <!-- Top Header Section -->
+    <header class = "header-wrapper" id = "header-wrapper"></header>
+    
     <main class = "main-body" id = "main-body">
         <!-- Hero/Intro Section Start -->
-        <section class = "intro-wrapper" id = "intro-wrapper">
-        </section>
-        <!-- Hero/Intro Section End -->
+        <section class = "intro-wrapper" id = "intro-wrapper"></section>
+        <!-- Hemro/Intro Section End -->
         <!-- Question Section Start -->
-        <section class="question-rotation-wrapper" id = "question-rotation-wrapper">
-        </section>
+        <section class="question-rotation-wrapper" id = "question-rotation-wrapper"></section>
         <!-- Question Section End -->
         <!-- Answer Section Start --> 
         <div class = "answer-section" id = "answer-section">
-        
             <section class = "answer-rotation-wrapper" id = "answer-rotation-wrapper">
                 <ul class = "answer-options" id = "answer-option-one"></ul>
             </section>
@@ -42,7 +33,12 @@
             </section>
         </div>
         <!-- Answer Section End -->
+        <!-- End Game Section Start -->
+        <div class = "game-over" id = "game-over"></div>
+        <div class = "answer-box" id = "answer-box">
+            <ol class = "intro-wrapper" id = "high-scores-list"></ol>
+        </div>
     </main>
-    <script src="./assets/script.js"></script>
+    <script src="./assets/script.js"></script>-
 </body>
 </html>
