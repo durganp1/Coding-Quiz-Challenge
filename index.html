@@ -7,28 +7,21 @@
     <link rel = "stylesheet" href="./assets/style.css">
 </head>
 <body>
-    <header class = "header-wrapper">
-        <div class = "high-score-container" id = "high-score-container">
-
-        </div>
-        
-        <div class = "countdown-timer" id = "countdown-timer">
-            <h2 class = "countdown" id = "countdown"></h2>
-        </div>
+    <!-- Top Header Section -->
+    <header class = "header-wrapper" id = "header-wrapper">
+        <div class = "header-container" id = "header-container">
+            <h2 class = "header-h2" id = "header-h2"></h2>
+        </div> 
     </header>
     <main class = "main-body" id = "main-body">
         <!-- Hero/Intro Section Start -->
-        <section class = "intro-wrapper" id = "intro-wrapper">
-           <input type = "text" id = "input-box" class = "input-box">
-        </section>
+        <section class = "intro-wrapper" id = "intro-wrapper"></section>
         <!-- Hemro/Intro Section End -->
         <!-- Question Section Start -->
-        <section class="question-rotation-wrapper" id = "question-rotation-wrapper">
-        </section>
+        <section class="question-rotation-wrapper" id = "question-rotation-wrapper"></section>
         <!-- Question Section End -->
         <!-- Answer Section Start --> 
         <div class = "answer-section" id = "answer-section">
-        
             <section class = "answer-rotation-wrapper" id = "answer-rotation-wrapper">
                 <ul class = "answer-options" id = "answer-option-one"></ul>
             </section>
@@ -43,11 +36,12 @@
             </section>
         </div>
         <!-- Answer Section End -->
-        <footer class = "answer-box" id = "answer-box">
+        <!-- End Game Section Start -->
+        <div class = "answer-box" id = "answer-box">
             <ol class = "intro-wrapper" id = "high-scores-list"></ol>
             <button class = "new-clear-button" id = "New Game" type = "input"></button>
             <button class = "new-clear-button" id = "Clear All Scores" type = "input"></button>
-        </footer>
+        </div>
     </main>
     <script src="./assets/script.js"></script>
 </body>

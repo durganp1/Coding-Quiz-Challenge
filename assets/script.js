@@ -1,8 +1,6 @@
 
-var pageContentEl = document.querySelector("#main-body");
-var questionIntroEl = document.querySelector("#question-intro-section");
+var headerWrapperEl = document.querySelector("#header-wrapper");
 var gameOverWrapperEl = document.querySelector("#answer-box");
-var enterInitialsWrapperEl = document.querySelector("#main-body")
 var introWrapperEl = document.querySelector("#intro-wrapper");
 var questionWrapperEl = document.querySelector("#question-rotation-wrapper");
 var answerOptionOneEl = document.querySelector("#answer-option-one");
@@ -11,17 +9,14 @@ var answerOptionThreeEl = document.querySelector("#answer-option-three");
 var answerOptionFourEl = document.querySelector("#answer-option-four");
 var answerBoxEl = document.querySelector("#answer-box");
 var answerBoxTextEl = "";
-var timerEl = document.getElementById("countdown");
-var highScoreEl = document.getElementById("high-score-container");
+var timerEl = document.getElementById("header-container");
 var answerTextEl = "";
 var currentQuestionIndex = 0;
-var counterEl = 0;
 var currentScoreEl = 90;
 var timeInterval;
 var inputInitialsEl;
 var gameOverScoreEl;
 var scoresObj = JSON.parse(localStorage.getItem("scoresObj")) || [];
-var scoreId = 0;
 
 var questionArray = [
     "What is a Method?",
@@ -88,6 +83,25 @@ var answerArray = [
     optionFour: "An object"
     }];
 
+var headerWrapper = function() {
+    var highScoreEl = document.getElementById("header-container");
+        highScoreEl.className = "header-container";
+        highScoreEl.textContent = "High Score ";
+    var titleEl = document.getElementById("header-container");
+        titleEl.className = "header-container";
+        titleEl.textContent = "Code Quiz Challenge";
+        // highScoreEl.appendChild(titleEl);
+        // headerWrapperEl.appendChild(highScoreEl);
+};
+
+var countdownEl = function () {
+        timeInterval = setInterval(function() {
+        timerEl.textContent = "Score " + currentScoreEl;
+        currentScoreEl--;
+    }, 1000);  
+};
+
+
 var introWrapper = function() {
     var quizTitleEl = document.createElement("div");
         quizTitleEl.className = "intro-wrapper";
@@ -105,12 +119,7 @@ var introWrapper = function() {
         introWrapperEl.appendChild(startButtonEl);           
 };
 
-var countdownEl = function () {
-        timeInterval = setInterval(function() {
-        timerEl.textContent = "Score " + currentScoreEl;
-        currentScoreEl--;
-    }, 1000);  
-};
+
 
 var questionRotateEl = function() {
     var questionEl = document.createElement("div");
@@ -194,6 +203,7 @@ var questionAnswerHandlerEl = function(event) {
 };
 
 introWrapperEl.addEventListener("click", () => {
+    headerWrapper();
     countdownEl();
     questionAnswerHandlerEl();
 });
@@ -220,11 +230,11 @@ var gameOverEl = function(scoreDataObj) {
         inputInitialsEl.setAttribute("type", "text");
         inputInitialsEl.setAttribute("value", "");
         enterInitialsTextEl.appendChild(inputInitialsEl);
-        enterInitialsWrapperEl.appendChild(enterInitialsTextEl);
+        answerBoxEl.appendChild(enterInitialsTextEl);
     var inputInitialsButtonEl = document.createElement("button");
         inputInitialsButtonEl.textContent = "Submit";
         inputInitialsButtonEl.className = "start-button";
-        enterInitialsWrapperEl.appendChild(inputInitialsButtonEl);
+        answerBoxEl.appendChild(inputInitialsButtonEl);
         inputInitialsButtonEl.addEventListener("click", () => {
     var scoreDataObj = {
         name: inputInitialsEl.value,
