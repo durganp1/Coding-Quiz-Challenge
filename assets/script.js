@@ -295,6 +295,7 @@ var finalHighScoreEl = function() {
         });
     var newGameButtonEl = document.createElement("button");
         newGameButtonEl.textContent = "New Game";
+        newGameButtonEl.id = ("new-game-button");
         newGameButtonEl.className = "new-clear-button";
         gameOverWrapperEl.appendChild(newGameButtonEl);
         
@@ -303,15 +304,20 @@ var finalHighScoreEl = function() {
         clearAllButton.className = "new-clear-button";
         gameOverWrapperEl.appendChild(clearAllButton);
         
-         
+        document.getElementById("new-game-button").addEventListener("click", restartGame());   
 
+};
+
+var restartGame = function() {
+    clearCurrent();
+    currentQuestionIndex = 0;
+    introWrapper();
 };
 
 
 
-//document.getElementById("").addEventListener("click", introWrapper());
 
-//clearAllButton = document.getElementById("Clear All Scores").addEventListener("click", localStorage.clear());  
+//document.getElementById("Clear All Scores").addEventListener("click", localStorage.clear());  
 
 introWrapper();
 loadScores();
