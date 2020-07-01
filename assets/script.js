@@ -263,7 +263,6 @@ var endGameHighScoresEl = function() {
 };
 
 var saveScores = function () {
-        console.log(scoresObj);
         localStorage.setItem("scoresObj", JSON.stringify(scoresObj));   
 }
 
@@ -273,7 +272,6 @@ var loadScores = function () {
             return false;
         }
         savedScores = JSON.parse(savedScores);
-        console.log(savedScores);
 }
 
 var finalHighScoreEl = function() {
@@ -284,9 +282,9 @@ var finalHighScoreEl = function() {
         endGameHeaderEl.textContent = "High Scores";
         gameOverWrapperEl.appendChild(endGameHeaderEl);
 
-        scoresObj.sort = function(a, b) {
-            return b - a;
-        };
+        scoresObj.sort(function(a, b) {
+            return b.score - a.score;
+        });
         scoresObj.forEach(function(score) {
     var listScore = document.createElement("li");
         listScore.textContent = score.name + "\xa0\xa0\xa0\xa0\xa0" + score.score;
@@ -304,7 +302,7 @@ var finalHighScoreEl = function() {
         clearAllButton.className = "new-clear-button";
         gameOverWrapperEl.appendChild(clearAllButton);
         
-        document.getElementById("new-game-button").addEventListener("click", restartGame());   
+        //document.getElementById("new-game-button").addEventListener("click", restartGame());   
 
 };
 
