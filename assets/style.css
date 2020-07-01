@@ -25,7 +25,7 @@
     display: inline-block;
 }
 .intro-instructions {
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: purple;
 }
 .start-button {
@@ -54,6 +54,7 @@
 }
 .answer-box {
     border: purple solid .1rem;
+    flex: wrap;
 }
 .answer-box-text {
     font-size: 2rem;
@@ -64,4 +65,15 @@
 .answer-block-top {
     font-size: 3rem;
     color: purple;
+}
+.new-clear-button {
+    outline: none;
+    border: none;
+    background-color: blue;
+    color: cornsilk;
+    border-radius: 12px;
+    font-size: 5vw;
+    padding: 1rem 2rem;
+    margin: auto 2rem;
+    height: 2rem;
 }

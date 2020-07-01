@@ -20,9 +20,8 @@ var currentScoreEl = 90;
 var timeInterval;
 var inputInitialsEl;
 var gameOverScoreEl;
-var scores = [];
+var scoresObj = JSON.parse(localStorage.getItem("scoresObj")) || [];
 var scoreId = 0;
-
 
 var questionArray = [
     "What is a Method?",
@@ -103,18 +102,14 @@ var introWrapper = function() {
     var startButtonEl = document.createElement("button");
         startButtonEl.textContent = "Click to Start";
         startButtonEl.className = "start-button";
-        introWrapperEl.appendChild(startButtonEl); 
-             
+        introWrapperEl.appendChild(startButtonEl);           
 };
-
-
 
 var countdownEl = function () {
         timeInterval = setInterval(function() {
-        timerEl.textContent = "Scores " + currentScoreEl;
+        timerEl.textContent = "Score " + currentScoreEl;
         currentScoreEl--;
-    }, 1000);
-        
+    }, 1000);  
 };
 
 var questionRotateEl = function() {
@@ -126,7 +121,6 @@ var questionRotateEl = function() {
 
 var answerRotateEl = function(event) {
     var retrieveOptionsArray = [answerArray[currentQuestionIndex].optionOne, answerArray[currentQuestionIndex].optionTwo, answerArray[currentQuestionIndex].optionThree, answerArray[currentQuestionIndex].optionFour];
-    // randomize rertriveOptionsArry
     var shuffle = function(retrieveOptionsArray) {
         var counter = retrieveOptionsArray.length, temp, index;
             while (counter > 0) {
@@ -158,7 +152,6 @@ var answerRotateEl = function(event) {
 };
 
 var clearCurrent = function()  {
-    //clear everything first
         questionWrapperEl.innerHTML = '';
         answerOptionOneEl.innerHTML = '';
         answerOptionTwoEl.innerHTML = '';
@@ -186,12 +179,10 @@ var rightWrongEl = function(event) {
         questionAnswerHandlerEl();
 };
 
-document.querySelectorAll(".answer-rotation-wrapper").forEach(item => {
-    item.addEventListener("click", rightWrongEl)
+        document.querySelectorAll(".answer-rotation-wrapper").forEach(item => {
+        item.addEventListener("click", rightWrongEl)
 });
   
-
-
 var questionAnswerHandlerEl = function(event) {
         if ( currentQuestionIndex < questionArray.length ) { 
             questionRotateEl();
@@ -243,85 +234,67 @@ var gameOverEl = function(scoreDataObj) {
         enterInitialsTextEl.innerHTML = "";
         inputInitialsButtonEl.innerHTML = "";
         clearInterval(timeInterval);
-        scores.push(scoreDataObj);
-        //scoreIdCounter++;
+        scoresObj.push(scoreDataObj);
         saveScores();
         endGameHighScoresEl();
         });     
 };
 
-var finalHighScoreEl = function() { 
-    highScoreEl.textContent = "High Score is ";
-    var highestScore = 0;
-
-    for ( i = 0; i < scores.length; i++) {
-        if (scores[i] > highestScore) {
-            highestScore = scores[i]
-        }
-    }
-    return highestScore;
-};
-console.log(finalHighScoreEl(scores));
-
 var endGameHighScoresEl = function() {
+    
+        finalHighScoreEl();
+};
+
+var saveScores = function () {
+        console.log(scoresObj);
+        localStorage.setItem("scoresObj", JSON.stringify(scoresObj));   
+}
+
+var loadScores = function () {
+    var savedScores = localStorage.getItem("scoresObj");
+        if (!savedScores) {
+            return false;
+        }
+        savedScores = JSON.parse(savedScores);
+        console.log(savedScores);
+}
+
+var finalHighScoreEl = function() {
     var endGameEl = document.createElement("div");
         endGameEl.className = "intro-wrapper";
     var endGameHeaderEl = document.createElement("h2");
         endGameHeaderEl.className = "answer-block-top";
         endGameHeaderEl.textContent = "High Scores";
         gameOverWrapperEl.appendChild(endGameHeaderEl);
-    var endGameListEl = document.createElement("ol");
-        endGameListEl.className = "intro-wrapper";
-        endGameHeaderEl.appendChild(endGameListEl);
-    var endGameListItemsEl = document.createElement("li");
-        endGameListItemsEl.className = "intro-instructions";
-        endGameListItemsEl.textContent = "";
-        endGameListEl.appendChild(endGameListItemsEl);
-    var endGameListItemsTwoEL = document.createElement("li");
-        endGameListItemsTwoEL.className = "intro-instructions";
-        endGameListItemsTwoEL.textContent = "test 2";
-        endGameListEl.appendChild(endGameListItemsTwoEL);
-    var endGameListItemsThreeEl = document.createElement("li");
-        endGameListItemsThreeEl.className = "intro-instructions";
-        endGameListItemsThreeEl.textContent = "test 3"
-        endGameListEl.appendChild(endGameListItemsThreeEl);
-};
 
-var saveScores = function () {
-        console.log(scores);
-        localStorage.setItem("scores", JSON.stringify(scores));
+        scoresObj.sort = function(a, b) {
+            return b - a;
+        };
+        scoresObj.forEach(function(score) {
+        var listScore = document.createElement("li");
+        listScore.textContent = score.name + "\xa0\xa0\xa0\xa0\xa0" + score.score;
+        listScore.className = "intro-instructions";
+        //var highScoresListEl = document.getElementById("high-scores-list");
+        gameOverWrapperEl.appendChild(listScore);
+        });
+    var newGameButtonEl = document.getElementById("New Game");
+        newGameButtonEl.id = "New Game";
+        newGameButtonEl.textContent = "New Game";
+        newGameButtonEl.className = "new-clear-button";
+        gameOverWrapperEl.appendChild(newGameButtonEl);
         
-}
+    var clearAllButton = document.getElementById("Clear All Scores");
+        clearAllButton.id = "Clear All Scores";
+        clearAllButton.textContent = "Clear All Scores";
+        clearAllButton.className = "new-clear-button";
+        gameOverWrapperEl.appendChild(clearAllButton);
+         
 
-var loadScores = function () {
-    var savedScores = localStorage.getItem("scores");
-        if (!savedScores) {
-            return false;
-        }
-        savedScores = JSON.parse(savedScores);
-        console.log(savedScores);
-        for ( i = 0; i < savedScores.length; i++) {
-            finalHighScoreEl(savedScores[i]);
-        }
-
-}
-
+};
+    
+document.getElementById("New Game").addEventListener("click", questionAnswerHandlerEl());
+document.getElementById("Clear All Scores").addEventListener("click", localStorage.clear());  
 
 introWrapper();
-finalHighScoreEl();
 loadScores();
-// var saveTasks = function() {
-//     localStorage.setItem("tasks", JSON.stringify(tasks));
-// }
-// var loadTasks = function() {
-// var savedTasks = localStorage.getItem("tasks");
-//     if (!savedTasks) {
-//         return false;
-//     }
-//     savedTasks = JSON.parse(savedTasks);
-//     console.log("Saved Tasks from loading")
-//     console.log(savedTasks);
-//     for (var i = 0; i < savedTasks.length; i++) {
-//         createTaskEl(savedTasks[i]);
-//     }
-// };
+
