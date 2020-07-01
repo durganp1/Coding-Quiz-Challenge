@@ -9,7 +9,7 @@ var answerOptionThreeEl = document.querySelector("#answer-option-three");
 var answerOptionFourEl = document.querySelector("#answer-option-four");
 var answerBoxEl = document.querySelector("#answer-box");
 var answerBoxTextEl = "";
-var timerEl = document.getElementById("header-container");
+var timerEl;
 var answerTextEl = "";
 var currentQuestionIndex = 0;
 var currentScoreEl = 90;
@@ -84,27 +84,30 @@ var answerArray = [
     }];
 
 var headerWrapper = function() {
-    var highScoreEl = document.getElementById("header-container");
+    var highScoreEl = document.createElement("h2");
         highScoreEl.className = "header-container";
         highScoreEl.textContent = "High Score ";
-    var titleEl = document.getElementById("header-container");
-        titleEl.className = "header-container";
+    var titleEl = document.createElement("h2");
+        titleEl.className = "header-h2";
         titleEl.textContent = "Code Quiz Challenge";
-        // highScoreEl.appendChild(titleEl);
-        // headerWrapperEl.appendChild(highScoreEl);
+        headerWrapperEl.appendChild(highScoreEl);
+        headerWrapperEl.appendChild(titleEl);
 };
 
 var countdownEl = function () {
+        timerEl = document.createElement("h2");
+        timerEl.className = "header-container";
         timeInterval = setInterval(function() {
         timerEl.textContent = "Score " + currentScoreEl;
         currentScoreEl--;
     }, 1000);  
+    headerWrapperEl.appendChild(timerEl);
 };
 
 
 var introWrapper = function() {
-    var quizTitleEl = document.createElement("div");
-        quizTitleEl.className = "intro-wrapper";
+    gameOverWrapperEl.innerHTML = "";
+        answerBoxEl.innerHTML = "";        
     var quizIntroTitleEl = document.createElement("h2");
         quizIntroTitleEl.className = "question-rotation-wrapper";
         quizIntroTitleEl.textContent = "Code Quiz Challenge";
@@ -116,10 +119,16 @@ var introWrapper = function() {
     var startButtonEl = document.createElement("button");
         startButtonEl.textContent = "Click to Start";
         startButtonEl.className = "start-button";
-        introWrapperEl.appendChild(startButtonEl);           
+        introWrapperEl.appendChild(startButtonEl); 
+          
 };
 
-
+introWrapperEl.addEventListener("click", () => {
+    introWrapperEl.innerHTML = "";
+    headerWrapper();
+    countdownEl();
+    questionAnswerHandlerEl();
+});
 
 var questionRotateEl = function() {
     var questionEl = document.createElement("div");
@@ -167,6 +176,8 @@ var clearCurrent = function()  {
         answerOptionThreeEl.innerHTML = '';
         answerOptionFourEl.innerHTML = '';
         introWrapperEl.innerHTML = "";
+        gameOverWrapperEl.innerHTML = "";
+        answerBoxEl.innerHTML = "";
 };
 
 var rightWrongEl = function(event) {
@@ -202,15 +213,11 @@ var questionAnswerHandlerEl = function(event) {
         };
 };
 
-introWrapperEl.addEventListener("click", () => {
-    headerWrapper();
-    countdownEl();
-    questionAnswerHandlerEl();
-});
+
 
 var gameOverEl = function(scoreDataObj) {
         clearTimeout(timeInterval);
-        timerEl.textContent = "";
+        headerWrapperEl.innerHTML = "";
     var gameOverEl = document.createElement("div");
         gameOverEl.className = "intro-wrapper";
     var gameOverHeaderEl = document.createElement("h2");
@@ -251,7 +258,7 @@ var gameOverEl = function(scoreDataObj) {
 };
 
 var endGameHighScoresEl = function() {
-    
+        clearCurrent();
         finalHighScoreEl();
 };
 
@@ -281,29 +288,30 @@ var finalHighScoreEl = function() {
             return b - a;
         };
         scoresObj.forEach(function(score) {
-        var listScore = document.createElement("li");
+    var listScore = document.createElement("li");
         listScore.textContent = score.name + "\xa0\xa0\xa0\xa0\xa0" + score.score;
         listScore.className = "intro-instructions";
-        //var highScoresListEl = document.getElementById("high-scores-list");
         gameOverWrapperEl.appendChild(listScore);
         });
-    var newGameButtonEl = document.getElementById("New Game");
-        newGameButtonEl.id = "New Game";
+    var newGameButtonEl = document.createElement("button");
         newGameButtonEl.textContent = "New Game";
         newGameButtonEl.className = "new-clear-button";
         gameOverWrapperEl.appendChild(newGameButtonEl);
         
-    var clearAllButton = document.getElementById("Clear All Scores");
-        clearAllButton.id = "Clear All Scores";
+    var clearAllButton = document.createElement("button");
         clearAllButton.textContent = "Clear All Scores";
         clearAllButton.className = "new-clear-button";
         gameOverWrapperEl.appendChild(clearAllButton);
+        
          
 
 };
-    
-document.getElementById("New Game").addEventListener("click", questionAnswerHandlerEl());
-document.getElementById("Clear All Scores").addEventListener("click", localStorage.clear());  
+
+
+
+//document.getElementById("").addEventListener("click", introWrapper());
+
+//clearAllButton = document.getElementById("Clear All Scores").addEventListener("click", localStorage.clear());  
 
 introWrapper();
 loadScores();

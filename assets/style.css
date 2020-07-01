@@ -3,13 +3,11 @@
     text-align: center;
     
 }
-.input-box {
-    border: none;
-}
+
 .header-wrapper {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 .header-container {
     display: inline-block;
@@ -18,7 +16,14 @@
     font-weight: bold;
 }
 
-.countdown-timer  .header-h2 {
+.header-h2 {
+    font-weight: bold;
+    font-size: 3rem;
+    color: purple;
+    display: inline-block;
+}
+
+.countdown {
     font-size: 1.5rem;
     color: black;
     font-weight: bold;
@@ -73,7 +78,5 @@
     color: cornsilk;
     border-radius: 12px;
     font-size: 5vw;
-    padding: 1rem 2rem;
     margin: auto 2rem;
-    height: 2rem;
 }
