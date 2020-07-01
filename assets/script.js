@@ -100,13 +100,12 @@ var countdownEl = function () {
         timeInterval = setInterval(function() {
         timerEl.textContent = "Score " + currentScoreEl;
         currentScoreEl--;
-    }, 1000);  
-    headerWrapperEl.appendChild(timerEl);
+        }, 1000);  
+        headerWrapperEl.appendChild(timerEl);
 };
 
-
 var introWrapper = function() {
-    gameOverWrapperEl.innerHTML = "";
+        gameOverWrapperEl.innerHTML = "";
         answerBoxEl.innerHTML = "";        
     var quizIntroTitleEl = document.createElement("h2");
         quizIntroTitleEl.className = "question-rotation-wrapper";
@@ -119,8 +118,7 @@ var introWrapper = function() {
     var startButtonEl = document.createElement("button");
         startButtonEl.textContent = "Click to Start";
         startButtonEl.className = "start-button";
-        introWrapperEl.appendChild(startButtonEl); 
-          
+        introWrapperEl.appendChild(startButtonEl);          
 };
 
 introWrapperEl.addEventListener("click", () => {
@@ -177,7 +175,6 @@ var clearCurrent = function()  {
         answerOptionFourEl.innerHTML = '';
         introWrapperEl.innerHTML = "";
         gameOverWrapperEl.innerHTML = "";
-        answerBoxEl.innerHTML = "";
 };
 
 var rightWrongEl = function(event) {
@@ -213,9 +210,8 @@ var questionAnswerHandlerEl = function(event) {
         };
 };
 
-
-
 var gameOverEl = function(scoreDataObj) {
+        answerBoxEl.innerHTML = "";
         clearTimeout(timeInterval);
         headerWrapperEl.innerHTML = "";
     var gameOverEl = document.createElement("div");
@@ -281,14 +277,13 @@ var finalHighScoreEl = function() {
         endGameHeaderEl.className = "answer-block-top";
         endGameHeaderEl.textContent = "High Scores";
         answerBoxEl.appendChild(endGameHeaderEl);
-
         scoresObj.sort(function(a, b) {
             return b.score - a.score;
         });
         scoresObj.forEach(function(score) {
     var listScore = document.createElement("li");
         listScore.textContent = score.name + "\xa0\xa0\xa0\xa0\xa0" + score.score;
-        listScore.className = "intro-instructions";
+        listScore.className = "score-list";
         answerBoxEl.appendChild(listScore);
         });
     var newGameButtonEl = document.createElement("button");
@@ -296,27 +291,25 @@ var finalHighScoreEl = function() {
         newGameButtonEl.id = ("new-game-button");
         newGameButtonEl.className = "new-clear-button";
         answerBoxEl.appendChild(newGameButtonEl);
-        
     var clearAllButton = document.createElement("button");
         clearAllButton.textContent = "Clear All Scores";
         clearAllButton.className = "new-clear-button";
         answerBoxEl.appendChild(clearAllButton);
-        
-        //newGameButtonEl.addEventListener("click", restartGame()); 
-        //clearAllButton.addEventListener("click", localStorage.clear());    
-
+        newGameButtonEl.addEventListener("click", restartGame); 
+        clearAllButton.addEventListener("click", clearStorage);    
 };
 
 var restartGame = function() {
     clearCurrent();
+    loadScores();
     currentQuestionIndex = 0;
     introWrapper();
 };
 
-
-
-
-
+var clearStorage = function() {
+    localStorage.clear();
+    answerBoxEl.innerHTML = "";
+};
 
 introWrapper();
 loadScores();

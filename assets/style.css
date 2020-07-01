@@ -1,7 +1,6 @@
 * {
     box-sizing: border-box;
     text-align: center;
-    
 }
 
 .header-wrapper {
@@ -9,6 +8,7 @@
     align-items: center;
     justify-content: space-around;
 }
+
 .header-container {
     display: inline-block;
     font-size: 2rem;
@@ -29,10 +29,12 @@
     font-weight: bold;
     display: inline-block;
 }
+
 .intro-instructions {
     font-size: 1.5rem;
     color: purple;
 }
+
 .start-button {
     outline: none;
     border: none;
@@ -41,11 +43,13 @@
     border-radius: 12px;
     font-size: 5vw;
 }
+
 .question-rotation-wrapper {
     font-size: 3rem;
     color: purple;
     
 }
+
 .answer-style {
     display: inline-block;
     padding: 7px 15px;
@@ -57,20 +61,24 @@
     border-radius: 15px;
     background-color: purple;
 }
+
 .answer-box {
     border: purple solid .1rem;
     flex: wrap;
 }
+
 .answer-box-text {
     font-size: 2rem;
     font-weight: bold;
     font-style: italic;
     color: purple;
 }
+
 .answer-block-top {
     font-size: 3rem;
     color: purple;
 }
+
 .new-clear-button {
     outline: none;
     border: none;
@@ -79,4 +87,11 @@
     border-radius: 12px;
     font-size: 5vw;
     margin: auto 2rem;
+}
+
+.score-list {
+    font-size: 1.5rem;
+    color: purple;
+    text-align: left;
+    margin-left: 23rem;
 }
