@@ -16,8 +16,8 @@ Coding Quiz Challenge is a multiple choice coding quiz.  You will start with a t
   * [Questions](#questions)
 
 ## Deployed
-    Code Quiz Challenge is deployed at
-    https://durganp1.github.io/Coding-Quiz-Challenge/
+Code Quiz Challenge is deployed at
+https://durganp1.github.io/Coding-Quiz-Challenge/
 
 ## Contributions
 
