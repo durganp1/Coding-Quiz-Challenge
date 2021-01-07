@@ -5,7 +5,7 @@
   
 
 ## Description
-    Coding Quiz Challenge is a multiple choice coding quiz.  You will start with a time of 90 seconds.  Your score/time will count down at the start of the quiz and for each incorrect answer you will be penalized 10 seconds.  It will record your final score/time and keep the top scores stored in local storage.  It is built with JavaScript, HTML and CSS.
+Coding Quiz Challenge is a multiple choice coding quiz.  You will start with a time of 90 seconds.  Your score/time will count down at the start of the quiz and for each incorrect answer you will be penalized 10 seconds.  It will record your final score/time and keep the top scores stored in local storage.  It is built with JavaScript, HTML and CSS.
 
 ## Table of Contents
 
